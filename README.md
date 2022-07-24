@@ -10,4 +10,4 @@ Terminal/Command Prompt/Powershell Terminal. Make sure that you have navigated t
 of the app on your terminal.
 
 ### Usage
-To start the CLI app, run the command `python app.py`. The CLI app interface should start up.
+To start the CLI app, run the command `python main.py`. The CLI app interface should start up.
