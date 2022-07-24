@@ -2,11 +2,12 @@ import re
 import sys
 import copy
 import requests
+from typing import *
 
 YEAR = "2022-2023"
 
 class Module:
-    def __init__(self, code, prereq=[], coreq=[]):
+    def __init__(self, code: str, prereq: List[str] = [], coreq: List[str] = []):
         self.code = code
         self.prereq = prereq
         self.coreq = coreq
@@ -73,7 +74,7 @@ def add_module_code(query) -> set[str]:
             modules.remove(x)
             print(f"Removed {x}")
         else:
-            if requests.get(f"https://api.nusmods.com/v2/{year}/modules/{x}.json").status_code == 200:
+            if requests.get(f"https://api.nusmods.com/v2/{YEAR}/modules/{x}.json").status_code == 200:
                 modules.add(x)
             else:
                 print("Unrecognised module")
