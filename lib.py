@@ -59,7 +59,7 @@ def generate_modules(module_list) -> Set[Module]:
 
     raise NotImplementedError
 
-def add_module_code(query) -> set[str]:
+def add_module_code(query) -> Set[str]:
     """
     Generates a set of valid module code strings from user input
     :return: Set[String]
