@@ -1,0 +1,21 @@
+COMPUTER_SCIENCE_CORE_MODS = [
+    "CS1101S",
+    "ES2660",
+    "IS1108",
+    "CS1231S",
+    "CS2030S",
+    "CS2040S",
+    "CS2100",
+    "CS2101",
+    "CS2103T",
+    "CS2106",
+    "CS2109S",
+    "CS3230"
+]
+
+COMPUTER_SCIENCE_MATH_MODS = [
+    "MA2001",
+    "MA1521",
+    "ST2334"
+]
+
