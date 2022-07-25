@@ -1,8 +1,38 @@
 import re
 import sys
 import copy
+import unittest
 import requests
 from typing import *
+
+class TestStringMethods(unittest.TestCase):
+    def test_set_year(self):
+        global YEAR
+        set_year("2019-2020")
+        self.assertEqual(YEAR, "2019-2020")
+        self.assertNotEqual(YEAR, "2022-2023")
+        set_year("2022-2023")
+
+    def test_parse_string(self):
+        self.assertEqual(
+            parse_string("Hello friends CS1010"),
+            ["CS1010"])
+        self.assertEqual(
+            parse_string("Hello friends MA1301FC"),
+            ["MA1301FC"])
+        self.assertEqual(
+            parse_string("Hello friends M1301FC"),
+            [])
+        self.assertEqual(
+            parse_string("Hello friends MA131FC"),
+            [])
+        self.assertEqual(
+            parse_string("Hello friends MA131FC"),
+            [])
+        self.assertEqual(
+            parse_string("CS1010 CS1101S MA1301FC"),
+            ["CS1010", "CS1101S", "MA1301FC"])
+
 
 YEAR = "2022-2023"
 
@@ -32,7 +62,6 @@ def obtain_prerequisites(module_code) -> Set[str]:
     Returns a set of all prerequisites for a certain module or its equivalents
     :return: Set[str]
     """
-    global YEAR
     prereqs = set()
     r = requests.get(f"https://api.nusmods.com/v2/{YEAR}/modules/{module_code}.json")
     # Obtain the prerequisites directly from the module
@@ -48,7 +77,6 @@ def generate_modules(module_list) -> Set[Module]:
     Generates a final set of modules from a set of module codes
     :return: Set[Module]
     """
-    global YEAR
     final_list = set()
     working_list = copy.deepcopy(module_list)
     checked = list()
@@ -64,7 +92,6 @@ def add_module_code(query) -> Set[str]:
     Generates a set of valid module code strings from user input
     :return: Set[String]
     """
-    global YEAR
     print(f"{query}\nEnter \"SUBMIT\" to submit.\nEnter a code again to remove it from the list.")
     modules = set()
     while True:
@@ -82,3 +109,7 @@ def add_module_code(query) -> Set[str]:
             else:
                 print("Unrecognised module")
     return modules
+
+if __name__ == "__main__":
+    print("Running tests for lib.py")
+    unittest.main()
