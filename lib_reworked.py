@@ -1,4 +1,3 @@
-import enum
 import re
 import requests
 
@@ -6,7 +5,7 @@ from enum import IntEnum
 from typing import *
 
 
-class ConnectionAlertLevel(enum.IntEnum):
+class ConnectionAlertLevel(IntEnum):
     RAISE = 1
     LOG = 2
     SUPPRESS = 3
