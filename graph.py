@@ -100,28 +100,49 @@ class ModuleGraph:
             r = self.send_request(module)
 
             if "corequisite" in r.keys():
-                return [mod for mod in self.parse_string(r.get("corequisite"))]
+                return set([mod for mod in self.parse_string(r.get("corequisite"))])
         else:
             raise ValueError("Module code is not in the correct format")
 
-    def get_preclusions(self, module: str):
-        """Returns a list of preclusions of an input module"""
+    def get_prerequisites(self, module: str):
+        """Returns a list of prerequisites of an input module"""
+        # TODO
 
         if self.parse_module_code(module):
             pass
         else:
             raise ValueError("Module code is not in the correct format")
 
-    def get_prerequisites(self, module: str):
-        """Returns a list of prerequisities of an input module"""
+    def get_preclusions(self, module: Module):
+        """
+        Returns a list of preclusions of an input module
 
-        pass
+        This is a BFS search for all the preclusions in the chain
+        """
+
+        to_check = [module]
+        finalised = set()
+
+        while to_check:
+            curr_module = to_check.pop()
+            r = self.send_request(str(curr_module))
+
+            if r is not None and "preclusion" in r.keys():
+                to_check.extend(r.get("preclusion"))
+
+            finalised.add(curr_module)
+
+        # remove the preclusions from the graph completely
+        for mod in finalised:
+            self.remove_deeply_from_graph(mod)
+
+        return finalised
 
     def remove_deeply_from_graph(self, module: Module):
         """
         Remove a particular module deeply from the graph if it is found in it
 
-        Node list takes precendence over the edge lists in the graph, and is checked first before the edges are checked
+        Node list takes precedence over the edge lists in the graph, and is checked first before the edges are checked
         """
 
         if module in self.GRAPH:
@@ -130,4 +151,3 @@ class ModuleGraph:
         for node in self.GRAPH:
             if module in self.GRAPH[node]:
                 self.GRAPH[node].remove(module)
-                break
